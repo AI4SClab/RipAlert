@@ -67,7 +67,7 @@ You can train the modules separately.
     ```
 
 2.  **Train the Entropy-Based Detector:**
-    *(Trained for 50 epochs with batch size 16, one-cycle LR schedule starting at 1e-4 [cite: 216])*
+    [cite_start]*(Trained for 50 epochs with batch size 16, one-cycle LR schedule starting at 1e-4 [cite: 216])*
     ```bash
     python train_detector.py --config configs/detector_config.yaml
     ```
@@ -80,3 +80,54 @@ To evaluate a trained model, run:
 python evaluate.py --model_type detector \
                    --weights /path/to/your/detector_weights.pt \
                    --data data/ripalert_custom.yaml
+````
+
+## 📈 Results
+
+### 1\. Prediction Quality
+
+[cite\_start]Our region-sensitive optical flow method produces higher-quality future frames with better structural consistency compared to standard methods[cite: 251, 264].
+
+[cite\_start]**Table 1: Quantitative evaluation of predicted frame quality** [cite: 253]
+
+| Method | PSNR (↑) | SSIM (↑) |
+| :--- | :---: | :---: |
+| TV-L1 | 30.6631 | 0.7226 |
+| Lucas-Kanade | 30.6226 | 0.7168 |
+| **Region-Sensitive (Ours)** | **30.8708** | **0.7539** |
+
+### 2\. Detection Performance
+
+[cite\_start]Our full model, integrating the CEA module, achieves state-of-the-art performance, significantly outperforming all baselines[cite: 275]. [cite\_start]The CEA module alone boosts the mAP50 from 90.96% (baseline YOLOv12) to **94.68%**[cite: 290].
+
+[cite\_start]**Table 2: Performance comparison on the detection datasets** [cite: 274]
+
+| Model | Precision (↑) | Recall (↑) | mAP50 (↑) | mAP50-95 (↑) |
+| :--- | :---: | :---: | :---: | :---: |
+| YOLOv8s-seg | 0.8762 | 0.8467 | 0.8925 | 0.4666 |
+| YOLOv8m-seg | 0.8804 | 0.8504 | 0.8992 | 0.4748 |
+| RT-DETRv2 | 0.8424 | 0.7590 | 0.8770 | 0.4290 |
+| YOLOv12 (Baseline) | 0.9067 | 0.8521 | 0.9096 | 0.4788 |
+| **Ours (RipAlert + CEA)** | **0.9336** | **0.8844** | **0.9468** | **0.4849** |
+
+## 📱 Deployment and Social Impact
+
+[cite\_start]The RipAlert system has been piloted in collaboration with the Institute of Oceanology, Chinese Academy of Sciences (IOCAS) at high-risk coastal zones in Shandong and Fujian, China[cite: 309, 311].
+
+  * [cite\_start]It enables **preemptive detection 5-10 seconds in advance**[cite: 311].
+  * [cite\_start]A companion mobile app provides real-time alerts to beachgoers and supervisors[cite: 312, 317].
+  * [cite\_start]The system has successfully issued alerts for 32 real-world rip current events[cite: 316].
+
+## 📜 Citation
+
+If you find our work useful in your research, please consider citing:
+
+```bibtex
+@inproceedings{wan2026ripalert,
+  title={RipAlert: A Future-Frame-Aware Framework for Rip Current Forecasting and Early Alerting},
+  author={Wan, Meng and Su, Qi and Xia, Zhixin and Chen, Kanglin and Wang, Jue and Liu, Tiantian and Cao, Rongqiang and Cui, Hui and Shi, Peng and Wang, Yangang and Feng, Liqiang and Zhao, Zhenbing},
+  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  year={2026}
+}
+```
+
